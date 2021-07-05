@@ -38,9 +38,8 @@ require('./config/passport')(passport);
 
 // Add routes
 app.use('/users', users);
-app.get('/', function(req, res){
-   res.send("Hello world!");
-});
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Start Server
