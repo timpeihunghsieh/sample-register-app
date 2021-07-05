@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const passport = require('passport');
 const mongoose = require('mongoose');
 const dbconfig = require('./config/database');
 
@@ -23,6 +24,12 @@ const port = 3000;
 // Body Parser Middleware
 // Parase HTTP Request body to JSON object.
 app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 // Add routes
 app.use('/users', users);
