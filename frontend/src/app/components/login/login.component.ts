@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,10 @@ export class LoginComponent implements OnInit {
     });
 
   constructor(
-    public fb: FormBuilder) { }
+    public fb: FormBuilder,
+    private authService: AuthService,
+    private flashMessage: FlashMessagesService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,28 +34,21 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.loginForm == null || !this.loginForm.valid) {
-
-      console.log("invalid form");
-
       return false;
     } else {
-      // // Register user
-      // this.authService.registerUser(this.userForm.value).subscribe(data => {
-      //   if (data.success) {
-      //     this.flashMessage.show(
-      //       "You are now registered and can log in",
-      //       {cssClass: 'alert-success', timeout: 3000 /* 3 seconds */});
-      //     this.router.navigate(['/login']);
-      //   } else {
-      //     this.flashMessage.show(
-      //       "Something went wrong",
-      //       {cssClass: 'alert-danger', timeout: 3000 /* 3 seconds */});
-      //     this.router.navigate(['/register']);
-      //   }
-      // });
-
-      console.log("valid form");
-
+      this.authService.authenticateUse(this.loginForm.value).subscribe(data => {
+        if (data.success) {
+          // this.authService.storeUserData(data.token, data.user);
+          this.flashMessage.show(
+              'You are now logged in',
+              {cssClass: 'alert-success', timeout: 5000 /*5 sec*/});
+          this.router.navigate(['dashboard']);
+        } else {
+          this.flashMessage.show(
+              data.msg, {cssClass: 'alert-danger', timeout: 5000 /*5 sec*/});
+          this.router.navigate(['login']);
+        }
+      });
       return true;
     }
   }

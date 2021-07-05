@@ -29,4 +29,15 @@ export class AuthService {
         return res;
       }));
   }
+
+  authenticateUse(user: any): Observable<any> {
+    let url = `${this.baseUri}/users/authenticate`;
+
+    return this.http.post(
+        url, user,
+        {headers: this.headers})
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
 }
