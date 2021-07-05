@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="py-2 text-center">
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 order-md-1">
+      <h4 class="mb-3">User Registration</h4>
+      <form class="needs-validation" novalidate
+          [formGroup]="userForm" 
+          [ngClass]="{'was-validated': submitted}"
+          (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder=""
+                value="" required formControlName="username">
+            <div class="invalid-feedback"
+                *ngIf="submitted && myForm.username.errors?.required">
+              Valid username is required.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password"
+                placeholder="" value="" required
+                formControlName="password">
+            <div class="invalid-feedback"
+                *ngIf="submitted && myForm.password.errors?.required">
+              Password is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email"
+              placeholder="you@example.com" required
+              formControlName="email">
+          <div class="invalid-feedback"
+              *ngIf="submitted && myForm.email.errors?.required">
+            Please enter a valid email address.
+          </div>
+          <div class="invalid-feedback"
+              *ngIf="submitted && myForm.email.errors?.pattern">
+            Enter email address with the correct format.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="nickname">Nick name</label>
+          <input type="text" class="form-control" id="nickname" placeholder=""
+              value="" required
+              formControlName="nickname">
+          <div class="invalid-feedback"
+              *ngIf="submitted && myForm.nickname.errors?.required">
+            Valid nickname is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="number" class="form-control" id="phoneNumber"
+                 placeholder="555123456" required
+                 formControlName="phoneNumber">
+          <div class="invalid-feedback"
+              *ngIf="submitted && myForm.phoneNumber.errors?.required">
+            Please enter a valid phone number.
+          </div>
+          <div class="invalid-feedback"
+              *ngIf="submitted && myForm.phoneNumber.errors?.pattern">
+            Please enter number only.
+          </div>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
