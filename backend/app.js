@@ -21,6 +21,10 @@ const users = require('./routes/users');
 // Port Number
 const port = 3000;
 
+// CORS Middleware
+// TODO(timhsieh): Add this back in when we need it
+//app.use(cors());
+
 // Body Parser Middleware
 // Parase HTTP Request body to JSON object.
 app.use(bodyParser.json());
