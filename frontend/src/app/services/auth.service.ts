@@ -40,4 +40,29 @@ export class AuthService {
         return res;
       }));
   }
+
+  storeUserData(token: string, user: any): void {
+    localStorage.setItem('id_token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    this.authToken = token;
+    this.user = user;
+  }
+
+  loggedIn(): boolean {
+    // TODO(timhsieh): Note that each call to this method would mean
+    // a call to localStorage.
+    const token = this.getToken();
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  getToken(): string {
+    const token = localStorage.getItem('id_token') || "";
+    return token;
+  }
+
+  logout() {
+    this.authToken = null;
+    this.user = null;
+    localStorage.clear();
+  }
 }
