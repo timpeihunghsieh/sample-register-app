@@ -41,6 +41,27 @@ export class AuthService {
       }));
   }
 
+  getProfile() {
+    this.loadToken();
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.authToken
+    });
+    let url = `${this.baseUri}/users/profile`;
+
+    return this.http.get(
+        url,
+        {headers: headers})
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
+
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
+  }
+
   storeUserData(token: string, user: any): void {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));
