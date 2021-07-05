@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="container">
+  <div class="py-2 text-center">
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 order-md-1">
+      <h4 class="mb-3">User Log in</h4>
+      <form class="needs-validation" novalidate
+          [formGroup]="loginForm" 
+          [ngClass]="{'was-validated': submitted}"
+          (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username"
+              placeholder="" value="" required
+              formControlName="username">
+            <div class="invalid-feedback"
+              *ngIf="submitted && myForm.username.errors?.required">
+              Valid username is required.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password"
+              placeholder="" value="" required
+              formControlName="password">
+            <div class="invalid-feedback"
+              *ngIf="submitted && myForm.password.errors?.required">
+              Password is required.
+            </div>
+          </div>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+</div>
