@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +22,10 @@ export class RegisterComponent implements OnInit {
     });
 
   constructor(
-    public fb: FormBuilder) {
+    public fb: FormBuilder,
+    private authService: AuthService,
+    private flashMessage: FlashMessagesService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -35,13 +41,20 @@ export class RegisterComponent implements OnInit {
     if (this.userForm == null || !this.userForm.valid) {
       return false;
     } else {
-      // this.apiService.createEmployee(this.employeeForm.value).subscribe(
-      //   (res) => {
-      //     console.log('Employee successfully created!')
-      //     this.ngZone.run(() => this.router.navigateByUrl('/list-employees'))
-      //   }, (error) => {
-      //     console.log(error);
-      //   });
+      // Register user
+      this.authService.registerUser(this.userForm.value).subscribe(data => {
+        if (data.success) {
+          this.flashMessage.show(
+            "You are now registered and can log in",
+            {cssClass: 'alert-success', timeout: 3000 /* 3 seconds */});
+          this.router.navigate(['/login']);
+        } else {
+          this.flashMessage.show(
+            "Something went wrong",
+            {cssClass: 'alert-danger', timeout: 3000 /* 3 seconds */});
+          this.router.navigate(['/register']);
+        }
+      });
 
       return true;
     }
